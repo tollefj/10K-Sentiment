@@ -1,0 +1,5 @@
+*.DS_Store
+filings/
+pysentiment/__pycache__/
+testing/
+useless/
