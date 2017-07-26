@@ -1,5 +1,7 @@
 *.DS_Store
+*.swp
 filings/
 pysentiment/__pycache__/
 testing/
 useless/
+__pycache__/
