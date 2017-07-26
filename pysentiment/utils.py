@@ -47,7 +47,7 @@ class Tokenizer(BaseTokenizer):
         return tokens
         
     def get_stopset(self):
-        from base import STATIC_PATH
+        from .base import STATIC_PATH
         files = ['Currencies.txt', 'DatesandNumbers.txt', 'Generic.txt', 'Geographic.txt',
                  'Names.txt']
         stopset = set()

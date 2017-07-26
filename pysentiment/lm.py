@@ -1,5 +1,5 @@
 import pandas as pd
-from base import STATIC_PATH, BaseDict
+from .base import STATIC_PATH, BaseDict
 
 
 class LM(BaseDict):

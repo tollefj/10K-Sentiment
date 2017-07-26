@@ -4,7 +4,7 @@ This module contains base classes for dictionaries.
 
 import abc
 import os
-from utils import Tokenizer
+from .utils import Tokenizer
 
 
 STATIC_PATH = os.path.dirname(__file__)+'/static'
