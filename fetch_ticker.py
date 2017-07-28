@@ -24,7 +24,7 @@ def process_page(page, cache):
         page = page.replace('&nbsp;', ' ').replace('&#160;', ' ')
         # Replace all newlines and carriage returns
         page = page.strip().replace('\n', ' ').replace('\r', '')
-        # Clear html-style spaces
+        # remove any multiple spaces
         page = re.sub(' +', ' ', page)
         #  while '  ' in page:
         #      page = page.replace('  ', ' ')
@@ -81,19 +81,18 @@ def download_10k(link, ticker, filename):
     for i in range(len(toc) - 1):
         print(toc[i] + '->' + toc[i + 1])
         match = do_match(page, toc[i], toc[i + 1])
-        if not match or match and len(match)<10:
+        if not match or match and len(match) < 10:
             print('Attempting space->nospace')
             match = do_match(page, toc[i], toc_nospace[i + 1])
-        if not match or match and len(match)<10:
+        if not match or match and len(match) < 10:
             print('Attempting nospace->nospace')
             match = do_match(page, toc_nospace[i], toc_nospace[i + 1])
-        if not match or match and len(match)<10:
+        if not match or match and len(match) < 10:
             print('Attempting nospace->space')
             match = do_match(page, toc_nospace[i], toc[i + 1])
         if match:
             print('Regex match')
             txt = open(os.path.join(path, toc[i]) + '.txt', 'w')
-            #  out = match.group(2)
             txt.write(match)
             txt.close()
 
@@ -118,7 +117,7 @@ def get_10k_data(link, ticker_cell):
                 download_10k(form_link, ticker, filedate)
 
 
-def get_link_table(ticker):
+def get_ticker_data(ticker):
     url = get_ticker_url(ticker)
     print(url)
     page = urllib.request.urlopen(url)
@@ -147,8 +146,8 @@ def get_link_table(ticker):
 sp = []
 with open(os.path.join('sp500', 'list.txt'), 'r') as sp500:
     sp = [s.strip() for s in sp500.readlines()]
-random_tickers = [sp[randint(0, 500)] for i in range(10)]
+random_tickers = [sp[randint(0, len(sp))] for i in range(50)]
 print('Random tickers:')
 print(random_tickers)
 for stock in random_tickers:
-    get_link_table(stock)
+    get_ticker_data(stock)
