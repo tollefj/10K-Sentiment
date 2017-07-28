@@ -11,9 +11,11 @@ if not os.path.isdir(risk_dir):
 
 csvfile = open(os.path.join(risk_dir, 'risks.csv'), 'w')
 fieldnames = ['Company',
+              '2013_Polarity', '2013_Ratio',
               '2014_Polarity', '2014_Ratio',
               '2015_Polarity', '2015_Ratio',
-              '2016_Polarity', '2016_Ratio']
+              '2016_Polarity', '2016_Ratio',
+              '2017_Polarity', '2017_Ratio']
 writer = csv.writer(csvfile, quoting=csv.QUOTE_MINIMAL)
 writer.writerow(fieldnames)
 
@@ -31,7 +33,10 @@ class Ticker:
         row = self.get_score(item_path)
         pos = row['Positive']
         neg = row['Negative']
-        ratio = float(neg)/float(pos)
+        if pos == 0 or neg == 0:
+            ratio = 0.0
+        else:
+            ratio = float(neg)/float(pos)
         polarity = row['Polarity']
         #  polarity = polar + ' (Pos: ' + pos + ', Neg: ' + neg + ')'
         print(polarity)

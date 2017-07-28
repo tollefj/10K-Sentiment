@@ -1,7 +1,7 @@
 _form = '10-K'
 _count = '10'  # Amount of links to fetch. Only recent years are interesting.
 _url = 'https://www.sec.gov'
-_years = ['2016', '2015', '2014']
+_years = ['2017', '2016', '2015', '2014', '2013']
 toc = ['item 1 business',
        'item 1a risk factors',
        'item 1b unresolved staff comments',
