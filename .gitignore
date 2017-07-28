@@ -4,4 +4,6 @@ filings/
 pysentiment/__pycache__/
 testing/
 useless/
+csv/
+risk_factors/
 __pycache__/

@@ -25,8 +25,9 @@ def process_page(page, cache):
         # Replace all newlines and carriage returns
         page = page.strip().replace('\n', ' ').replace('\r', '')
         # Clear html-style spaces
-        while '  ' in page:
-            page = page.replace('  ', ' ')
+        page = re.sub(' +', ' ', page)
+        #  while '  ' in page:
+        #      page = page.replace('  ', ' ')
         # Brutally remove all html tags
         page = bleach.clean(page, tags=[], attributes={},
                             styles=[], strip=True)
@@ -73,22 +74,27 @@ def download_10k(link, ticker, filename):
     # Apply a regex match on items a->b in page
     def do_match(page, a, b):
         regex = between_items(a, b)
-        return re.search(regex, page, flags=re.IGNORECASE)
+        match = re.search(regex, page, flags=re.IGNORECASE)
+        return match.group(2) if match else None
 
     print('analyzing page for ' + filename)
     for i in range(len(toc) - 1):
         print(toc[i] + '->' + toc[i + 1])
         match = do_match(page, toc[i], toc[i + 1])
-        #  print(str(match))
-        if not match:
-            # TODO: Try different combinations of toc and toc_nospace
-            print('Attempting to match against no space')
+        if not match or match and len(match)<10:
+            print('Attempting space->nospace')
             match = do_match(page, toc[i], toc_nospace[i + 1])
+        if not match or match and len(match)<10:
+            print('Attempting nospace->nospace')
+            match = do_match(page, toc_nospace[i], toc_nospace[i + 1])
+        if not match or match and len(match)<10:
+            print('Attempting nospace->space')
+            match = do_match(page, toc_nospace[i], toc[i + 1])
         if match:
             print('Regex match')
-            txt = open(os.path.join(path, toc[i][:25]) + '.txt', 'w')
-            out = match.group(2)
-            txt.write(out)
+            txt = open(os.path.join(path, toc[i]) + '.txt', 'w')
+            #  out = match.group(2)
+            txt.write(match)
             txt.close()
 
 
@@ -144,6 +150,5 @@ with open(os.path.join('sp500', 'list.txt'), 'r') as sp500:
 random_tickers = [sp[randint(0, 500)] for i in range(10)]
 print('Random tickers:')
 print(random_tickers)
-
 for stock in random_tickers:
     get_link_table(stock)
