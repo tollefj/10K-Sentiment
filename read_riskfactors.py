@@ -1,33 +1,6 @@
 import os
 import csv
-import sys
 from pysentiment.lm import LM
-
-if len(sys.argv) < 2:
-    print('Missing sector selection as argument. Valid arguments:\n',
-          '\n1\t-> business',
-          '\n1a\t-> risk factors',
-          '\n1b\t-> unresolved staff comments',
-          '\n2\t-> properties',
-          '\n3\t-> legal proceedings',
-          '\n4\t-> mine safety disclosures',
-          '\n5\t-> market for registrants ...',
-          '\n6\t-> selected financial data',
-          '\n7\t-> managements discussion and ...',
-          '\n7a\t-> quantitative and qualitative ...',
-          '\n8\t-> financial statements and suppl ... ',
-          '\n9\t-> changes in and disagreements ...',
-          '\n9a\t-> controls and procedures',
-          '\n9b\t-> other information',
-          '\n10\t-> directors executive officers ...',
-          '\n11\t-> executive compensation',
-          '\n12\t-> security ownership of certain ...',
-          '\n13\t-> certain relationships and ...',
-          '\n14\t-> principal accounting fees ...',
-          '\n15\t-> exhibits financial statement ...')
-    sys.exit(0)
-print(sys.argv[1])
-sys.exit(0)
 
 os.chdir(os.getcwd())
 _lm = LM()
